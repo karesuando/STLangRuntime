@@ -52,7 +52,7 @@ public:
 
 	void SetRetainedValue(const string& Name, double Value);
 
-	friend int CreatePOUObject(char* ExeFile);
+	friend long CreatePOUObject(char* ExeFile);
 
 protected:
 	const string m_POUName;

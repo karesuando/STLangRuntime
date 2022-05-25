@@ -27,6 +27,8 @@ struct ExecutableData
 		IntConstants = 0;
 		StringConstants = 0;
 		WStringConstants = 0;
+		D0 = D1 = D2 = D3 = 0;
+		FileHeader = { 0 };
 	}
 
 	int *Operands;
@@ -197,7 +199,7 @@ STLangSubPOUObject* CreateSubPOUObject (
 				else if (RODataSegment == 0)
 					throw new STLoadException(9);
 				else {
-					UINT Instructions[20000];
+					const UINT *Instructions = new UINT[CodeSegmentSize];
 					const int CodeSize = sizeof(UINT)*CodeSegmentSize;
 
 					InStream.read((char *)Instructions, CodeSize);
@@ -524,7 +526,7 @@ STLangSubPOUObject* CreateSubPOUObject (
 				);
 }
 
-int CreatePOUObject(char* ExeFile)
+long CreatePOUObject(char* ExeFile)
 {
 	int POUType;
 	int* Operands;
@@ -960,7 +962,7 @@ int CreatePOUObject(char* ExeFile)
 	return (int)TopLevelPOUObject;
 }
 
-int GetPOUType(int POUHandle)
+int GetPOUType(long POUHandle)
 {
 	if (POUHandle == 0)
 		return -1;
@@ -971,7 +973,7 @@ int GetPOUType(int POUHandle)
 	}
 }
 
-int GetInPutCount(int POUHandle)
+int GetInPutCount(long POUHandle)
 {
 	if (POUHandle == 0)
 		return -1;
@@ -982,7 +984,7 @@ int GetInPutCount(int POUHandle)
 	}
 }
 
-int GetOutPutCount(int POUHandle)
+int GetOutPutCount(long POUHandle)
 {
 	if (POUHandle == 0)
 		return -1;
@@ -993,7 +995,7 @@ int GetOutPutCount(int POUHandle)
 	}
 }
 
-bool GetPOUName(char* POUName, int POUHandle)
+bool GetPOUName(char* POUName, long POUHandle)
 {
 	if (POUHandle == 0)
 		return false;
@@ -1008,7 +1010,7 @@ bool GetPOUName(char* POUName, int POUHandle)
 
 int GetInputNames (
 	char** Inputs, 
-	int POUHandle)
+	long POUHandle)
 {
 	if (POUHandle == 0)
 		return -1;
@@ -1029,7 +1031,7 @@ int GetInputNames (
 
 int GetOutputNames (
 	char** Outputs, 
-	int POUHandle)
+	long POUHandle)
 {
 	if (POUHandle == 0)
 		return -1;
@@ -1050,7 +1052,7 @@ int GetOutputNames (
 
 int GetRetainedNames (
 	char** RetainedNames, 
-	int POUHandle)
+	long POUHandle)
 {
 	if (POUHandle == 0)
 		return -1;
@@ -1071,7 +1073,7 @@ int GetRetainedNames (
 
 double GetOutputValue (
 	char* Output, 
-	int POUHandle)
+	long POUHandle)
 {
 	if (POUHandle == 0)
 		return -99.0;
@@ -1084,7 +1086,7 @@ double GetOutputValue (
 
 double GetRetainedValue (
 	char* RetainedVar, 
-	int POUHandle)
+	long POUHandle)
 {
 	if (POUHandle == 0)
 		return -99.0;
@@ -1098,7 +1100,7 @@ double GetRetainedValue (
 void SetRetainedValue (
 	char* Name,
 	double Value,
-	int POUHandle)
+	long POUHandle)
 {
 	if (POUHandle != 0)
 	{
@@ -1111,7 +1113,7 @@ void SetRetainedValue (
 double ExecutePOU (
 	double ArgV[], 
 	int ArgC,
-	int POUHandle)
+	long POUHandle)
 {
 	if (POUHandle == 0)
 		return -99.0;

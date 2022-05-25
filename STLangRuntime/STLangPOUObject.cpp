@@ -208,12 +208,12 @@ double STLangPOUObject::Execute (
 	int64 li0,li1,li2,li3;
 
 	// Operand stacks
-	int IntStack[STACK_SIZE];
-	float FloatStack[STACK_SIZE];
-	int64 LongStack[STACK_SIZE];
-	double DoubleStack[STACK_SIZE];
-	char* StringStack[STACK_SIZE];
-	wchar_t* WStringStack[STACK_SIZE];
+	int IntStack[STACK_SIZE] = { 0 };
+	float FloatStack[STACK_SIZE] = { 0 };
+	int64 LongStack[STACK_SIZE] = { 0 };
+	double DoubleStack[STACK_SIZE] = { 0 };
+	char* StringStack[STACK_SIZE] = { 0 };
+	wchar_t* WStringStack[STACK_SIZE] = { 0 };
 
 	// Initialize stack pointers
 	IntOperand = IntStack - 1;
@@ -222,7 +222,12 @@ double STLangPOUObject::Execute (
     LongOperand = LongStack - 1;
 	StringOperand = StringStack - 1;
 	WStringOperand = WStringStack - 1;
-
+	b0 = b1 = b2 = b3 = 0;
+	s0 = s1 = s2 = s3 = 0;
+	i0 = i1 = i2 = i3 = 0;
+	f0 = f1 = f2 = f3 = 0;
+	d0 = d1 = d2 = d3 = 0;
+	li0 = li1 = li2 = li3 = 0;
 	// Program Counter (Instruction Pointer)
 	register int pc = -1;
 
@@ -694,11 +699,11 @@ decode:	switch (m_OpCode[pc])
 					continue;
 
 				case StandardLibrary::SLEN:
-					*++IntOperand = strlen(*StringOperand--);
+					*++IntOperand = (int)strlen(*StringOperand--);
 					continue;
 
 				case StandardLibrary::WSLEN:
-					*++IntOperand = wcslen(*WStringOperand--);
+					*++IntOperand = (int)wcslen(*WStringOperand--);
 					continue;
 
 				case StandardLibrary::STRCMP:
@@ -2169,6 +2174,12 @@ int STLangSubPOUObject::Execute()
 	int64 li0,li1,li2,li3;
 
 	pc = -1;
+	b0 = b1 = b2 = b3 = 0;
+	s0 = s1 = s2 = s3 = 0;
+	i0 = i1 = i2 = i3 = 0;
+	f0 = f1 = f2 = f3 = 0;
+	d0 = d1 = d2 = d3 = 0;
+	li0 = li1 = li2 = li3 = 0;
 	while (true)
 	{
 		pc++;
@@ -2634,11 +2645,11 @@ decode:	switch (m_OpCode[pc])
 					continue;
 
 				case StandardLibrary::SLEN:
-					*++IntOperand = strlen(*StringOperand--);
+					*++IntOperand = (int)strlen(*StringOperand--);
 					continue;
 
 				case StandardLibrary::WSLEN:
-					*++IntOperand = wcslen(*WStringOperand--);
+					*++IntOperand = (int)wcslen(*WStringOperand--);
 					continue;
 
 				case StandardLibrary::STRCMP:
